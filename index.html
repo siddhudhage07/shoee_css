@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shoe Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+
+    
+    background: linear-gradient(135deg, #667eea, #764ba2);
+
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(45deg, #000, #444);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.card p {
+    color: #181817;   /* bright gold for price */
+    font-weight: bold;
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.5);  /* darker glass */
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.container {
+    padding: 20px;
+}
+
+.search {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.search input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+.filters {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filters button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    background: #222;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    width: 220px;
+    margin: 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 10px;
+}
+
+.card p {
+    margin: 5px 10px;
+}
+
+.card button {
+    margin: 10px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    border: none;
+    background: #28a745;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.total {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>👟 Shoe Store</h1>
+    <div class="cart">🛒 Items: <span id="count">0</span></div>
+</header>
+
+<div class="container">
+
+    <div class="search">
+        <input type="text" placeholder="Search shoes..." onkeyup="searchProduct(this.value)">
+    </div>
+
+    <div class="filters">
+        <button onclick="filter('all')">All</button>
+        <button onclick="filter('sports')">Sports</button>
+        <button onclick="filter('casual')">Casual</button>
+        <button onclick="filter('formal')">Formal</button>
+    </div>
+
+    <div class="products" id="product-list"></div>
+
+    <div class="total">
+        Total Price: ₹<span id="total">0</span>
+    </div>
+
+</div>
+
+<script>
+const products = [
+    {name:"Nike Air", price:3000, category:"sports", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"},
+    {name:"Adidas Runner", price:2800, category:"sports", img:"https://images.unsplash.com/photo-1519741497674-611481863552"},
+    {name:"Casual Sneakers", price:2000, category:"casual", img:"https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ438QnFidjk-bkPfEviPvaJZnYyQVdLlQSIdEq4Ts53qXeyTouQdp8oA0cs-aTJoPZSnKDlIRoc9HIM6mSD6A_s1JaiLwB"},
+    {name:"Formal Shoes", price:3500, category:"formal", img:"https://images.unsplash.com/photo-1520256862855-398228c41684"},
+    {name:"Loafers", price:2500, category:"formal", img:"https://images.unsplash.com/photo-1582588678413-dbf45f4823e9"},
+    {name:"Canvas Shoes", price:1800, category:"casual", img:"https://images.unsplash.com/photo-1608231387042-66d1773070a5"}
+];
+
+let cartCount = 0;
+let total = 0;
+
+function display(items) {
+    const list = document.getElementById("product-list");
+    list.innerHTML = "";
+
+    items.forEach(p => {
+        list.innerHTML += `
+        <div class="card">
+            <img src="${p.img}">
+            <h3>${p.name}</h3>
+            <p>₹${p.price}</p>
+            <button onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+        </div>`;
+    });
+}
+
+function filter(category) {
+    if(category === "all") display(products);
+    else display(products.filter(p => p.category === category));
+}
+
+function searchProduct(text) {
+    const filtered = products.filter(p => 
+        p.name.toLowerCase().includes(text.toLowerCase())
+    );
+    display(filtered);
+}
+
+function addToCart(product) {
+    cartCount++;
+    total += product.price;
+
+    document.getElementById("count").innerText = cartCount;
+    document.getElementById("total").innerText = total;
+}
+
+display(products);
+</script>
+
+</body>
+</html>
