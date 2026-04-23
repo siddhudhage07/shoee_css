@@ -5,11 +5,13 @@
 <title>Shoe Store</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 <style>
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
-    background: linear-gradient(-45deg, #667eea, #764ba2, #6dd5ed, #2193b0);
+    background: linear-gradient(-45deg, #667eea, #764ba2, #6dd5ed);
     background-size: 400% 400%;
     animation: bg 10s ease infinite;
 }
@@ -22,21 +24,60 @@ body {
 
 header {
     background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
     color: white;
-    padding: 15px;
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
 }
 
-button {
-    cursor: pointer;
+header a {
+    background: #00c6ff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
 }
 
-.container {
-    padding: 20px;
+.container { text-align:center; padding:20px; }
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-/* LOGIN */
+.card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    width: 230px;
+    margin: 15px;
+    border-radius: 15px;
+    color: white;
+    transition: 0.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.card button {
+    width: 90%;
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(45deg,#00c6ff,#0072ff);
+    color: white;
+}
+
 .login-box {
     width: 320px;
     margin: 120px auto;
@@ -45,194 +86,58 @@ button {
     border-radius: 15px;
     text-align: center;
     color: white;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
-.login-box h2 {
-    margin-bottom: 15px;
-}
-
-.login-box input {
-    width: 90%;
-    margin: 10px;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-}
-
-.login-box button {
-    margin: 8px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background: #00c6ff;
-    color: white;
-    cursor: pointer;
-}
-
-.login-box button:hover {
-    background: #0072ff;
-}
-
-/* PRODUCTS */
-.products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.card {
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(10px);
-    color: white;
-    width: 220px;
-    margin: 15px;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-.card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-}
-
-.card h3 {
-    margin: 10px;
-}
-
-.card p {
-    margin: 5px 10px;
-    color: #00ffcc;
-    font-weight: bold;
-}
-
-.card button {
-    margin: 10px;
-    padding: 10px;
-    width: calc(100% - 20px);
-    border: none;
-    background: #28a745;
-    color: white;
-    border-radius: 10px;
-}
-
-.search {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.search input {
-    padding: 10px;
-    border-radius: 20px;
-    width: 250px;
-}
-
-.filters {
-    text-align: center;
-}
-
-.filters button {
-    padding: 10px;
-    margin: 5px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 20px;
-}
-
-.total {
-    text-align: center;
-    font-size: 20px;
-    color: white;
-    margin-top: 20px;
 }
 </style>
 </head>
 
 <body>
 
->
+<!-- LOGIN -->
 <div id="loginPage" class="login-box">
-    <h2>👟 Shoe Store Login</h2>
-
-    <input type="text" id="username" placeholder="Enter Username">
-    <input type="password" id="password" placeholder="Enter Password">
-
-    <button onclick="login()">Login</button>
-    <button onclick="register()">Register</button>
-
-    <p id="msg"></p>
+<h2>👟 Login</h2>
+<input id="username" placeholder="Username or Phone"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+<button onclick="register()">Register</button>
+<p id="msg"></p>
 </div>
-<!-- MAIN STORE -->
+
+<!-- STORE -->
 <div id="store" style="display:none;">
 
 <header>
-    <h1>👟 Shoe Store</h1>
-    <div>🛒 Items: <span id="count">0</span></div>
+<h2>👟 Shoe Store</h2>
+<a href="cart.html">🛒 Cart</a>
 </header>
 
 <div class="container">
-
-<div class="search">
-<input type="text" placeholder="Search..." onkeyup="searchProduct(this.value)">
+<h2 style="color:white;">🔥 Flat 20% OFF Today!</h2>
+<div class="products" id="products"></div>
 </div>
 
-<div class="filters">
-<button onclick="filter('all')">All</button>
-<button onclick="filter('sports')">Sports</button>
-<button onclick="filter('casual')">Casual</button>
-<button onclick="filter('formal')">Formal</button>
-</div>
-
-<div class="products" id="product-list"></div>
-
-<div class="total">
-Total: ₹<span id="total">0</span>
-</div>
-
-</div>
 </div>
 
 <script>
 
-// LOGIN FUNCTION
-// REGISTER
-function register() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
-
-    if(user && pass) {
-        localStorage.setItem("user", user);
-        localStorage.setItem("pass", pass);
-        document.getElementById("msg").innerText = "Registered Successfully!";
-    } else {
-        document.getElementById("msg").innerText = "Enter details!";
-    }
+// LOGIN
+function register(){
+    localStorage.setItem("user", username.value);
+    localStorage.setItem("pass", password.value);
+    msg.innerText="Registered!";
 }
 
-// LOGIN
-function login() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
-
-    const savedUser = localStorage.getItem("user");
-    const savedPass = localStorage.getItem("pass");
-
-    if(user === savedUser && pass === savedPass) {
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("store").style.display = "block";
-    } else {
-        document.getElementById("msg").innerText = "Invalid Login!";
-    }
+function login(){
+    if(username.value===localStorage.getItem("user") &&
+       password.value===localStorage.getItem("pass")){
+        loginPage.style.display="none";
+        store.style.display="block";
+        showProducts();
+    } else msg.innerText="Invalid!";
 }
 
 // PRODUCTS
+const DISCOUNT=20;
+
 const products = [
 {name:"Nike Air Max", price:3000, category:"sports", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"},
 {name:"Adidas Ultraboost", price:3500, category:"sports", img:"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb"},
@@ -269,43 +174,31 @@ const products = [
 {name:"Executive Shoes", price:4800, category:"formal", img:"https://images.unsplash.com/photo-1520256862855-398228c41684"}
 ];
 
-let cartCount = 0;
-let total = 0;
-
-function display(items) {
-    const list = document.getElementById("product-list");
-    list.innerHTML = "";
-
-    items.forEach(p => {
-        list.innerHTML += `
+// DISPLAY
+function showProducts(){
+    let html="";
+    products.forEach(p=>{
+        let newPrice=p.price-(p.price*DISCOUNT/100);
+        html+=`
         <div class="card">
             <img src="${p.img}">
             <h3>${p.name}</h3>
-            <p>₹${p.price}</p>
-            <button onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+            <p><del>₹${p.price}</del></p>
+            <p>₹${newPrice}</p>
+            <button onclick='addToCart(${JSON.stringify({...p,price:newPrice})})'>
+            Add to Cart</button>
         </div>`;
     });
+    document.getElementById("products").innerHTML=html;
 }
 
-function filter(cat) {
-    if(cat==="all") display(products);
-    else display(products.filter(p=>p.category===cat));
+// CART
+function addToCart(p){
+    let cart=JSON.parse(localStorage.getItem("cart"))||[];
+    cart.push(p);
+    localStorage.setItem("cart",JSON.stringify(cart));
+    alert("Added to cart!");
 }
-
-function searchProduct(text) {
-    display(products.filter(p=>p.name.toLowerCase().includes(text.toLowerCase())));
-}
-
-function addToCart(p) {
-    cartCount++;
-    total += p.price;
-
-    document.getElementById("count").innerText = cartCount;
-    document.getElementById("total").innerText = total;
-}
-
-display(products);
-
 </script>
 
 </body>
